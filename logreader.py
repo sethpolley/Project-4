@@ -110,6 +110,8 @@ def parser_main(x):
 
         file_list.append(lines_objects[4])
 
+        # add file name to new file_list
 
+        
         
 
