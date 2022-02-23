@@ -2,26 +2,21 @@ from calendar import weekday
 import os.path
 import urllib.request
 import re
+import datetime
 from datetime import datetime
 from datetime import date
-import datetime
 import math
 from statistics import mode
 from collections import Counter
 
 # import modules
-
-def import_log():
-    local_copy = 'http_access_log.txt'
-    # define log file variable
-    local_copy, headers = urllib.request.urlretrieve('https://s3.amazonaws.com/tcmg476/http_access_log', local_copy)
-
-# define import log file function 
-
+ 
 logexists = os.path.exists('http_access_log')
 
 if not logexists:
-    import_log
+    local_copy = 'http_access_log.txt'
+    # define log file variable
+    local_copy, headers = urllib.request.urlretrieve('https://s3.amazonaws.com/tcmg476/http_access_log', local_copy)
 
 # call import_log function if the log file does not exist
 
@@ -49,13 +44,13 @@ def create_month_files():
 month_files_exist = os.path.exists('January.txt')
 
 if not month_files_exist:
-    create_month_files
+    create_month_files()
 
 # call create_month_files if they do not extist
 
 def parser_main(x):
     
-    regex_parser = re.compile('(.*?) - - \[(.*?):(.*) .*\] \"[A-Z]{3,6} (.*?)( HTTP.*\"|\") ([2-5]0[0-9])')
+    regex_parser = re.compile('(.*?) - - \[(.*?):(.*) .*\] \"[A-Z]{3,6} (.*?) HTTP.*\" (\d{3}) (.+)')
     
     # define variable to tokenize list objects
 
@@ -101,13 +96,13 @@ def parser_main(x):
 
         # increment day of the week counter 
 
-        week_dict[((timestamp.isocalendar)[1])] += 1
+        week_dict[((timestamp.isocalendar())[1])] += 1
 
         # increment week counter 
 
-        if lines_objects[5] >= 400:
+        if int(lines_objects[5]) >= 400:
             unsuccessful_count += 1
-        if lines_objects[5] >= 300 and lines_objects < 400:
+        if int(lines_objects[5]) >= 300 and int(lines_objects[5]) < 400:
             redirect_count += 1
         
         # increment unsuccessful & redirect counts based on value of lines_objects[5]
@@ -119,9 +114,12 @@ def parser_main(x):
         month_file = open(month_file_ref[timestamp.month], 'a')
         log_entry = str(i) + ' \n'
         month_file.write(log_entry)
-        month_file.close
 
         # open month-specific file, write line to it, close it
+
+parser_main(lines)
+
+# call main function
 
 print('The following dictionary indicates how many requests were made per day of the week (numbered 0-6): \n', day_of_week_dict)
 
@@ -150,6 +148,6 @@ print('\n')
 res = Counter(file_list)
 tar_ele = res.most_common()[-1][0]
 
-print('The least requested file was: ', str(file_list) )
+print('The least requested file was: ', str(tar_ele) )
 
 # print statements that give results. 
