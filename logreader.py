@@ -5,6 +5,9 @@ import re
 from datetime import datetime
 from datetime import date
 import datetime
+import math
+from statistics import mode
+from collections import Counter
 
 # import modules
 
@@ -114,9 +117,39 @@ def parser_main(x):
         # add file name to new file_list
 
         month_file = open(month_file_ref[timestamp.month], 'a')
-        log_entry = i + ' \n'
+        log_entry = str(i) + ' \n'
         month_file.write(log_entry)
         month_file.close
 
         # open month-specific file, write line to it, close it
 
+print('The following dictionary indicates how many requests were made per day of the week (numbered 0-6): \n', day_of_week_dict)
+
+print('\n')
+
+print('The following dictionary indicates how many requests were made per week of the year (numbered 1-52): \n', week_dict)
+
+print('\n')
+
+print('The following dictionary indicates how many requests were made during each month of the year (numbered 1-12): \n', month_dict)
+
+print('\n')
+
+print(str(math.floor((unsuccessful_count / total_count) * 100)), ' percent of all requests were not successful. \n')
+
+print('\n')
+
+print(str(math.floor((redirect_count / total_count) * 100)), ' percent of all requests were redirected elsewhere. \n')
+
+print('\n')
+
+print('The most requested file was: ', str(mode(file_list)), '\n')
+
+print('\n')
+
+res = Counter(file_list)
+tar_ele = res.most_common()[-1][0]
+
+print('The least requested file was: ', str(file_list) )
+
+# print statements that give results. 
