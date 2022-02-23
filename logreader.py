@@ -1,5 +1,4 @@
 from calendar import weekday
-import imp
 import os.path
 import urllib.request
 import re
@@ -56,6 +55,8 @@ def parser_main(x):
     regex_parser = re.compile('(.*?) - - \[(.*?):(.*) .*\] \"[A-Z]{3,6} (.*?)( HTTP.*\"|\") ([2-5]0[0-9])')
     
     # define variable to tokenize list objects
+
+    global total_count, month_dict, day_of_week_dict, week_dict, unsuccessful_count, redirect_count, file_list
     total_count = 0
     month_dict = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0}
     day_of_week_dict = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0}
@@ -64,7 +65,7 @@ def parser_main(x):
     redirect_count = 0
     file_list = []
 
-    # define lists & dictionaries that will be needed to answer questions
+    # define global lists & dictionaries that will be needed to answer questions
 
     month_file_ref = ['','January.txt', 'February.txt', 'March.txt', 'April.txt', 'May.txt', 'June.txt', 'July.txt', 'August.txt', 'September.txt', 'October.txt', 'November.txt', 'December.txt']
 
@@ -112,6 +113,10 @@ def parser_main(x):
 
         # add file name to new file_list
 
-        
-        
+        month_file = open(month_file_ref[timestamp.month], 'a')
+        log_entry = i + ' \n'
+        month_file.write(log_entry)
+        month_file.close
+
+        # open month-specific file, write line to it, close it
 
