@@ -30,7 +30,7 @@ with open('http_access_log.txt', 'r') as http_info:
 
 def create_month_files():
     Jan = open('January.txt', 'x')
-    Feb = open('Feburary.txt', 'x')
+    Feb = open('February.txt', 'x')
     Mar = open('March.txt', 'x')
     Apr = open('April.txt', 'x')
     May = open('May.txt', 'x')
@@ -56,23 +56,30 @@ def parser_main(x):
     regex_parser = re.compile('(.*?) - - \[(.*?):(.*) .*\] \"[A-Z]{3,6} (.*?)( HTTP.*\"|\") ([2-5]0[0-9])')
     
     # define variable to tokenize list objects
-
+    total_count = 0
     month_dict = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0}
     day_of_week_dict = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0}
-    week_list = []
-    unsuccessful_list = []
-    redirect_list = []
+    week_dict = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0, 15: 0, 16: 0, 17: 0, 18: 0, 19: 0, 20: 0, 21: 0, 22: 0, 23: 0, 24: 0, 25: 0, 26: 0, 27: 0, 28: 0, 29: 0, 30: 0, 31: 0, 32: 0, 33: 0, 34: 0, 35: 0, 36: 0, 37: 0, 38: 0, 39: 0, 40: 0, 41: 0, 42: 0, 43: 0, 44: 0, 45: 0, 46: 0, 47: 0, 48: 0, 49: 0, 50: 0, 51: 0, 52: 0, }
+    unsuccessful_count = 0
+    redirect_count = 0
     file_list = []
 
     # define lists & dictionaries that will be needed to answer questions
+
+    month_file_ref = ['','January.txt', 'February.txt', 'March.txt', 'April.txt', 'May.txt', 'June.txt', 'July.txt', 'August.txt', 'September.txt', 'October.txt', 'November.txt', 'December.txt']
+
+    # create a list that each element position (1:'January.txt') matches the # of the month
+    # so that the '.month' attribute can be used to specify which file a new line will be added to
 
     for i in x:
     
     # for expression allows program to analyze each line of the list of lines individually
 
         lines_objects = regex_parser.split(i)
-
-        # break each line up into list of individual objects
+        if len(lines_objects) != 8:
+            continue
+    
+        # break each line up into list of individual objects, continue if line has error of some sort
 
         timestamp = datetime.strptime(lines_objects[2], '%d/%b/%Y')
 
@@ -84,7 +91,13 @@ def parser_main(x):
 
         day_of_week_dict[weekday(timestamp.year,timestamp.month,timestamp.day)] += 1
 
-        # increment day counter 
+        # increment day of the week counter 
+
+        week_dict[((timestamp.isocalendar)[1])] += 1
+
+        # increment week counter 
+
+
 
         
 
