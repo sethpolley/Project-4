@@ -97,6 +97,14 @@ def parser_main(x):
 
         # increment week counter 
 
+        if lines_objects[5] >= 400:
+            unsuccessful_count += 1
+        if lines_objects[5] >= 300 and lines_objects < 400:
+            redirect_count += 1
+        
+        # increment unsuccessful & redirect counts based on value of lines_objects[5]
+
+        
 
 
         
