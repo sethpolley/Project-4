@@ -75,6 +75,10 @@ def parser_main(x):
     
     # for expression allows program to analyze each line of the list of lines individually
 
+        total_count += 1
+
+        # increment total count 
+        
         lines_objects = regex_parser.split(i)
         if len(lines_objects) != 8:
             continue
@@ -104,7 +108,7 @@ def parser_main(x):
         
         # increment unsuccessful & redirect counts based on value of lines_objects[5]
 
-        
+        file_list.append(lines_objects[4])
 
 
         
